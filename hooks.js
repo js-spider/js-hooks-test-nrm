@@ -1,21 +1,22 @@
-const path = require('path');
-const ini = require('ini');
-const echo = require('node-echo');
 
-const NRMRC = path.join(process.env.HOME, '.nrmhrc');
+
+const { cleanRegistry, errExit }  = require('./cli')
 
 function preuninstall(argv){
-  if(argv.includes('--keep') || argv.includes('-k')){
-    console.log('preuninstall run success : keep .nrmrc info')
-    process.exit()
+  if(ifNeedClean(argv)){
+    return cleanRegistry();
   };
-  setCustomRegistry('',function(err){
-    if (err) errExit(err);
-  })
+  console.log('preuninstall run success : keep .nrmrc info')
+  process.exit();
 }
 
-function setCustomRegistry(config, cbk) {
-  echo(ini.stringify(config), '>', NRMRC, cbk);
+function ifNeedClean(argv){
+  console.log('process.env >> ',process.env)
+  if(process.env.npm_config_clean){
+
+  }else{
+
+  }
 }
 
 function isLocalDebug(argv){
@@ -29,10 +30,7 @@ function isLocalDebug(argv){
   return debugTarget;
 }
 
-function errExit(err) {
-  console.error('an error occured: ' + err);
-  process.exit(1);
-}
+
 function run (argv) {
   const target = isLocalDebug(argv) || process.env.npm_lifecycle_event;
   switch(target){

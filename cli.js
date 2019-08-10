@@ -531,11 +531,22 @@ function getINIInfo(path){
  * print message & exit
  */
 function exit(err) {
-    printErr(err);
+    err && printErr(err);
     process.exit(1);
 }
 
 function line(str, len) {
     var line = new Array(Math.max(1, len - str.length)).join('-');
     return ' ' + line + ' ';
+}
+
+function cleanRegistry(){
+    setCustomRegistry('',function(err){
+        if (err) exit(err);
+    })
+}
+
+module.exports = {
+    cleanRegistry,
+    errExit: exit
 }
