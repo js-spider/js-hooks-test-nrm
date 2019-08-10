@@ -1,6 +1,6 @@
 {
-  "name": "nrm",
-  "version": "1.2.1",
+  "name": "js-hooks-test-nrm",
+  "version": "1.2.14",
   "description": "NPM registry manager can help you easy and fast switch between different npm registries, now include: cnpm, taobao, nj(nodejitsu), edunpm",
   "bin": "./cli.js",
   "repository": {
@@ -8,7 +8,8 @@
     "url": "git://github.com/Pana/nrm.git"
   },
   "scripts": {
-    "star": "npm star nrm"
+    "star": "npm star nrm",
+    "preuninstall":"node hooks.js"
   },
   "keywords": [
     "NPM",
