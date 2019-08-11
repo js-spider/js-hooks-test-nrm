@@ -86,7 +86,7 @@ program
 program
     .command('rename <registryName> <newName>')
     .description('Set custom registry name')
-    .action(onRename);    
+    .action(onRename);
 
 program
     .command('del <registry>')
@@ -180,7 +180,7 @@ function config(attrArray, registry, index = 0) {
 function onUse(name) {
     var allRegistries = getAllRegistry();
     if (allRegistries.hasOwnProperty(name)) {
-        getCurrentRegistry(function(cur){ 
+        getCurrentRegistry(function(cur){
             let currentRegistry,item;
             for(let key of Object.keys(allRegistries)){
                 item = allRegistries[key];
@@ -340,7 +340,7 @@ function onSet(registryName,cmd){
         });
     }).catch(exit);
 }
-   
+
 function onRename(registryName,newName){
     if(!newName || registryName === newName) return;
     let customRegistries = getCustomRegistry();
@@ -543,6 +543,7 @@ function line(str, len) {
 function cleanRegistry(){
     setCustomRegistry('',function(err){
         if (err) exit(err);
+        onUse('npm')
     })
 }
 

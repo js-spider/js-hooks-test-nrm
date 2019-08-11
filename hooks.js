@@ -1,28 +1,30 @@
+#!/usr/bin/env node
 
+const { cleanRegistry }  = require('./cli')
 
-const { cleanRegistry, errExit }  = require('./cli')
-
-function preuninstall(argv){
-  if(ifNeedClean(argv)){
+function preuninstall(){
+  if(ifNeedClean()){
+    console.log('preuninstall run success : clean .nrmrc info')
     return cleanRegistry();
   };
   console.log('preuninstall run success : keep .nrmrc info')
   process.exit();
 }
 
-function ifNeedClean(argv){
-  console.log('process.env >> ',process.env)
+function ifNeedClean(){
   if(process.env.npm_config_clean){
-
+    return true
   }else{
-
+    const envArgv = process.env.npm_config_argv || '{"original":[]}';
+    const envOriginal = JSON.parse(envArgv).original;
+    return envOriginal.includes('-C')
   }
 }
 
 function isLocalDebug(argv){
   let debugTarget = null;
   argv.forEach(item=>{
-    // use node hooks.js --LocalDebugging=preuninstall 
+    // use node hooks.js --LocalDebugging=preuninstall
     if(item.startsWith('--LocalDebugging=')){
       debugTarget = item.split('=')[1]
     }
